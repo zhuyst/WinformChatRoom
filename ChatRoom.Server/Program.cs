@@ -20,12 +20,17 @@ namespace ChatRoom.Server
         {
             Console.WriteLine("正在启动聊天室服务器");
 
-            ChatRoomRemote.AddUserEvent += user =>
+            ChatRoomRemote.LoginEvent += user =>
             {
                 Console.WriteLine($"新用户\t{user.Name}\t加入到了聊天室");
                 OnlineUsers.Add(user);
                 user.Id = ++_idNow;
                 return user;
+            };
+            ChatRoomRemote.LogoutEvent += user =>
+            {
+                Console.WriteLine($"用户\t{user.Name}\t离开了聊天室");
+                OnlineUsers.Remove(user);
             };
             ChatRoomRemote.AddMessageEvent += message =>
             {
@@ -55,6 +60,8 @@ namespace ChatRoom.Server
 
             Console.WriteLine("服务器已启动，输入任意键关闭");
             Console.ReadLine();
+
+            ChannelServices.UnregisterChannel(channel);
         }
     }
 }

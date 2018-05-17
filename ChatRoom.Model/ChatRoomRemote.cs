@@ -23,7 +23,14 @@ namespace ChatRoom.Model
 
         public List<ChatMessage> Messages => GetMessagesEvent?.Invoke();
 
-        public static Func<User,User> AddUserEvent;
+        public static User SystemUser = new User()
+        {
+            Name = "系统"
+        };
+
+        public static Func<User,User> LoginEvent;
+
+        public static Action<User> LogoutEvent;
 
         public static Action<ChatMessage> AddMessageEvent;
 
@@ -33,15 +40,26 @@ namespace ChatRoom.Model
 
         public List<OnLineUser> OnLineUsers = new List<OnLineUser>();
 
-        public OnLineUser AddUser(OnLineUser onLineUser)
+        public OnLineUser Login(OnLineUser onLineUser)
         {
             OnLineUsers.Add(onLineUser);
 
             var user = onLineUser.User;
-            user = AddUserEvent?.Invoke(user);
-//            Broadcast(user);
+            user = LoginEvent?.Invoke(user);
+            onLineUser.User = user;
+
+            Broadcast(user);
+            SendSystemMessage($"欢迎\t{user.Name}\t进入聊天室");
 
             return onLineUser;
+        }
+
+        public void Logout(OnLineUser onLineUser)
+        {
+            OnLineUsers.Remove(onLineUser);
+            LogoutEvent?.Invoke(onLineUser.User);
+
+            SendSystemMessage($"用户\t{onLineUser.User.Name}\t离开了聊天室");
         }
 
         public void AddMessage(ChatMessage message)
@@ -56,6 +74,16 @@ namespace ChatRoom.Model
             {
                 online.CallBack(chatRoom);
             }
+        }
+
+        private void SendSystemMessage(string message)
+        {
+            Broadcast(new ChatMessage()
+            {
+                SendUser = SystemUser,
+                Text = message,
+                SendTime = DateTime.Now
+            });
         }
     }
 }

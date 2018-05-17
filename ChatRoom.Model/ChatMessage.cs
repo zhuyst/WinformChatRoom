@@ -10,5 +10,10 @@ namespace ChatRoom.Model
         public DateTime SendTime { get; set; }
 
         public string Text { get; set; }
+
+        public override string ToString()
+        {
+            return $"{SendUser.Name}：{Text}\t——{SendTime}";
+        }
     }
 }

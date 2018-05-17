@@ -12,9 +12,11 @@ namespace WinformChatRoom
     {
         private const string Url = "tcp://localhost:8080/ChatRoom";
 
+        private readonly TcpChannel _channel;
+
         private readonly ChatRoomRemote _chatRoom;
 
-        private OnLineUser _onLineUser = new OnLineUser();
+        private readonly OnLineUser _onLineUser = new OnLineUser();
 
         public MainForm(string name)
         {
@@ -39,17 +41,23 @@ namespace WinformChatRoom
                 TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
             };
 
-            var channel = new TcpChannel(tcpProperties,tcpClientSinkProvider,tcpServerSinkProvider);
-            ChannelServices.RegisterChannel(channel, false);
+            _channel = new TcpChannel(tcpProperties,tcpClientSinkProvider,tcpServerSinkProvider);
+            ChannelServices.RegisterChannel(_channel, false);
 
             _chatRoom = (ChatRoomRemote)Activator.GetObject(typeof(ChatRoomRemote),Url);
-            _onLineUser = _chatRoom.AddUser(_onLineUser);
+            _onLineUser = _chatRoom.Login(_onLineUser);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
             RefreshUserList();
             RefreshMessageList();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _chatRoom.Logout(_onLineUser);
+            ChannelServices.UnregisterChannel(_channel);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -60,39 +68,47 @@ namespace WinformChatRoom
         private void RefreshUserList()
         {
             UserListBox.BeginUpdate();
+
+            UserListBox.Items.Clear();
             foreach (var user in _chatRoom.Users)
             {
                 UserListBox.Items.Add(user.Name);
             }
+
             UserListBox.EndUpdate();
         }
 
         private void RefreshMessageList()
         {
             MessageListBox.BeginUpdate();
+
+            MessageListBox.Items.Clear();
             foreach (var message in _chatRoom.Messages)
             {
-                MessageListBox.Items.Add(message.Text);
+                MessageListBox.Items.Add(message.ToString());
             }
+
             MessageListBox.EndUpdate();
         }
 
         private void ReceivedMessage(IChatRoom chatRoom)
         {
-            Action<IChatRoom> action = ReceivedMessageHandler;
-            Invoke(action,chatRoom);
-        }
-
-        private void ReceivedMessageHandler(IChatRoom chatRoom)
-        {
-            switch (chatRoom)
+            if (InvokeRequired)
             {
-                case User user:
-                    Debug.WriteLine(user.Name);
-                    break;
-                case ChatMessage message:
-                    Debug.WriteLine(message.Text);
-                    break;
+                Action<IChatRoom> action = ReceivedMessage;
+                BeginInvoke(action, chatRoom);
+            }
+            else
+            {
+                switch (chatRoom)
+                {
+                    case User user:
+                        UserListBox.Items.Add(user.Name);
+                        break;
+                    case ChatMessage message:
+                        MessageListBox.Items.Add(message.ToString());
+                        break;
+                }
             }
         }
 
@@ -106,6 +122,7 @@ namespace WinformChatRoom
                 Text = text
             };
             _chatRoom.AddMessage(message);
+            MessageTextBox.Text = string.Empty;
         }
     }
 }
