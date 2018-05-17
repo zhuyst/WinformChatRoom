@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
@@ -34,8 +35,21 @@ namespace ChatRoom.Server
             ChatRoomRemote.GetUsersEvent += () => OnlineUsers;
             ChatRoomRemote.GetMessagesEvent += () => Messages;
 
-            var channel = new TcpServerChannel(8080);
-            ChannelServices.RegisterChannel(channel,true);
+            var tcpProperties = new Hashtable
+            {
+                ["name"] = "ChatRoom",
+                ["port"] = 8080
+            };
+
+            var tcpClientSinkProvider = new BinaryClientFormatterSinkProvider();
+            var tcpServerSinkProvider = new BinaryServerFormatterSinkProvider
+            {
+                TypeFilterLevel = System.Runtime.Serialization.Formatters.TypeFilterLevel.Full
+            };
+
+            var channel = new TcpChannel(tcpProperties,tcpClientSinkProvider,tcpServerSinkProvider);
+            ChannelServices.RegisterChannel(channel,false);
+
             RemotingConfiguration.RegisterWellKnownServiceType(typeof(ChatRoomRemote),
                 "ChatRoom", WellKnownObjectMode.Singleton);
 

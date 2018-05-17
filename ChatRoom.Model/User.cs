@@ -3,7 +3,7 @@
 namespace ChatRoom.Model
 {
     [Serializable()]
-    public class User
+    public class User : IChatRoom
     {
         public int Id { get; set; }
 
