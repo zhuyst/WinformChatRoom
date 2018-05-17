@@ -21,8 +21,6 @@ namespace ChatRoom.Model
     {
         public List<User> Users => GetUsersEvent?.Invoke();
 
-        public List<ChatMessage> Messages => GetMessagesEvent?.Invoke();
-
         public static User SystemUser = new User()
         {
             Name = "系统"
@@ -35,8 +33,6 @@ namespace ChatRoom.Model
         public static Action<ChatMessage> AddMessageEvent;
 
         public static Func<List<User>> GetUsersEvent;
-
-        public static Func<List<ChatMessage>> GetMessagesEvent;
 
         public List<OnLineUser> OnLineUsers = new List<OnLineUser>();
 

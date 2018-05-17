@@ -51,7 +51,6 @@ namespace WinformChatRoom
         private void MainForm_Load(object sender, EventArgs e)
         {
             RefreshUserList();
-            RefreshMessageList();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -76,19 +75,6 @@ namespace WinformChatRoom
             }
 
             UserListBox.EndUpdate();
-        }
-
-        private void RefreshMessageList()
-        {
-            MessageListBox.BeginUpdate();
-
-            MessageListBox.Items.Clear();
-            foreach (var message in _chatRoom.Messages)
-            {
-                MessageListBox.Items.Add(message.ToString());
-            }
-
-            MessageListBox.EndUpdate();
         }
 
         private void ReceivedMessage(IChatRoom chatRoom)

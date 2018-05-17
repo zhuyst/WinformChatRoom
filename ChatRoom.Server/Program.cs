@@ -12,8 +12,6 @@ namespace ChatRoom.Server
     {
         private static readonly List<User> OnlineUsers = new List<User>();
 
-        private static readonly List<ChatMessage> Messages = new List<ChatMessage>();
-
         private static int _idNow;
 
         static void Main(string[] args)
@@ -35,10 +33,8 @@ namespace ChatRoom.Server
             ChatRoomRemote.AddMessageEvent += message =>
             {
                 Console.WriteLine($"接收到消息\t{message.Text}");
-                Messages.Add(message);
             };
             ChatRoomRemote.GetUsersEvent += () => OnlineUsers;
-            ChatRoomRemote.GetMessagesEvent += () => Messages;
 
             var tcpProperties = new Hashtable
             {
