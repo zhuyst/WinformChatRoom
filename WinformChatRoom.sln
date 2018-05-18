@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatRoom.Server", "ChatRoom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatRoom.Model", "ChatRoom.Model\ChatRoom.Model.csproj", "{C3C74B44-7BF2-4B35-B660-4FBFF375091C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsControlLibrary", "WindowsFormsControlLibrary\WindowsFormsControlLibrary.csproj", "{67CC2CF2-0520-4447-A818-0D156D891705}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C3C74B44-7BF2-4B35-B660-4FBFF375091C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3C74B44-7BF2-4B35-B660-4FBFF375091C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3C74B44-7BF2-4B35-B660-4FBFF375091C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67CC2CF2-0520-4447-A818-0D156D891705}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67CC2CF2-0520-4447-A818-0D156D891705}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67CC2CF2-0520-4447-A818-0D156D891705}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67CC2CF2-0520-4447-A818-0D156D891705}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

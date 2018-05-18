@@ -31,10 +31,10 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.UserListBox = new System.Windows.Forms.ListBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.MessageListBox = new System.Windows.Forms.ListBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
+            this.MessageListPanel = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -68,6 +68,7 @@
             // 
             // UserListBox
             // 
+            this.UserListBox.BackColor = System.Drawing.Color.White;
             this.UserListBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.UserListBox.FormattingEnabled = true;
             this.UserListBox.ItemHeight = 15;
@@ -85,7 +86,8 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.MessageListBox);
+            this.splitContainer2.Panel1.BackColor = System.Drawing.Color.White;
+            this.splitContainer2.Panel1.Controls.Add(this.MessageListPanel);
             // 
             // splitContainer2.Panel2
             // 
@@ -93,16 +95,6 @@
             this.splitContainer2.Size = new System.Drawing.Size(808, 581);
             this.splitContainer2.SplitterDistance = 457;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // MessageListBox
-            // 
-            this.MessageListBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MessageListBox.FormattingEnabled = true;
-            this.MessageListBox.ItemHeight = 15;
-            this.MessageListBox.Location = new System.Drawing.Point(0, 0);
-            this.MessageListBox.Name = "MessageListBox";
-            this.MessageListBox.Size = new System.Drawing.Size(808, 457);
-            this.MessageListBox.TabIndex = 0;
             // 
             // splitContainer3
             // 
@@ -141,6 +133,17 @@
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
+            // MessageListPanel
+            // 
+            this.MessageListPanel.AutoScroll = true;
+            this.MessageListPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MessageListPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.MessageListPanel.Location = new System.Drawing.Point(0, 0);
+            this.MessageListPanel.Name = "MessageListPanel";
+            this.MessageListPanel.Size = new System.Drawing.Size(808, 457);
+            this.MessageListPanel.TabIndex = 0;
+            this.MessageListPanel.WrapContents = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -174,10 +177,10 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ListBox UserListBox;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListBox MessageListBox;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TextBox MessageTextBox;
         private System.Windows.Forms.Button SendButton;
+        private System.Windows.Forms.FlowLayoutPanel MessageListPanel;
     }
 }
 

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Windows.Forms;
+using WindowsFormsControlLibrary;
 using ChatRoom.Model;
 
 namespace WinformChatRoom
@@ -92,7 +94,12 @@ namespace WinformChatRoom
                         UserListBox.Items.Add(user.Name);
                         break;
                     case ChatMessage message:
-                        MessageListBox.Items.Add(message.ToString());
+                        var item = new MessageListItem()
+                        {
+                            Message = message
+                        };
+                        MessageListPanel.Controls.Add(item);
+                        MessageListPanel.VerticalScroll.Value = MessageListPanel.VerticalScroll.Maximum;
                         break;
                 }
             }
