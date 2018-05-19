@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Drawing;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Windows.Forms;
@@ -19,6 +17,8 @@ namespace WinformChatRoom
         private readonly ChatRoomRemote _chatRoom;
 
         private readonly OnLineUser _onLineUser = new OnLineUser();
+
+        private User _selectUser;
 
         public MainForm(string name)
         {
@@ -52,6 +52,7 @@ namespace WinformChatRoom
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Text = $@"聊天室 - {_onLineUser.User.Name}";
             RefreshUserList();
         }
 
@@ -68,15 +69,15 @@ namespace WinformChatRoom
 
         private void RefreshUserList()
         {
-            UserListBox.BeginUpdate();
+            UserListView.BeginUpdate();
 
-            UserListBox.Items.Clear();
-            foreach (var user in _chatRoom.Users)
+            UserListView.Items.Clear();
+            foreach (var user in _chatRoom.Users.Values)
             {
-                UserListBox.Items.Add(user.Name);
+                AddUser(user);
             }
 
-            UserListBox.EndUpdate();
+            UserListView.EndUpdate();
         }
 
         private void ReceivedMessage(IChatRoom chatRoom)
@@ -91,31 +92,58 @@ namespace WinformChatRoom
                 switch (chatRoom)
                 {
                     case User user:
-                        UserListBox.Items.Add(user.Name);
+                        AddUser(user);
                         break;
                     case ChatMessage message:
-                        var item = new MessageListItem()
-                        {
-                            Message = message
-                        };
-                        MessageListPanel.Controls.Add(item);
-                        MessageListPanel.VerticalScroll.Value = MessageListPanel.VerticalScroll.Maximum;
+                        AddMessage(message);
                         break;
                 }
             }
         }
 
+        private void AddUser(User user)
+        {
+            var item = new ListViewItem { Text = user.Id.ToString() };
+            item.SubItems.Add(user.Name);
+            UserListView.Items.Add(item);
+        }
+
+        private void AddMessage(ChatMessage message)
+        {
+            var item = new MessageListItem()
+            {
+                Message = message
+            };
+
+            MessageListPanel.Controls.Add(item);
+            MessageListPanel.VerticalScroll.Value = MessageListPanel.VerticalScroll.Maximum;
+        }
+
         private void SendButton_Click(object sender, EventArgs e)
         {
+            if (_selectUser.Id == _onLineUser.User.Id)
+            {
+                MessageBox.Show(@"你不能对自己发起私聊！");
+                return;
+            }
+
             var text = MessageTextBox.Text;
             var message = new ChatMessage()
             {
                 SendUser = _onLineUser.User,
                 SendTime = DateTime.Now,
-                Text = text
+                Text = text,
+                ToUser = _selectUser
             };
             _chatRoom.AddMessage(message);
             MessageTextBox.Text = string.Empty;
+        }
+
+        private void UserListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectUserId = UserListView.SelectedIndices.Count > 0 ?
+                int.Parse(UserListView.Items[UserListView.SelectedIndices[0]].Text) : 0;
+            _selectUser = selectUserId != 0 ? _chatRoom.Users[selectUserId] : null;
         }
     }
 }

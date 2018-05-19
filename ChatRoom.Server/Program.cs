@@ -10,7 +10,7 @@ namespace ChatRoom.Server
 {
     class Program
     {
-        private static readonly List<User> OnlineUsers = new List<User>();
+        private static readonly Dictionary<int,User> OnlineUsers = new Dictionary<int, User>();
 
         private static int _idNow;
 
@@ -21,14 +21,14 @@ namespace ChatRoom.Server
             ChatRoomRemote.LoginEvent += user =>
             {
                 Console.WriteLine($"新用户\t{user.Name}\t加入到了聊天室");
-                OnlineUsers.Add(user);
                 user.Id = ++_idNow;
+                OnlineUsers[user.Id] = user;
                 return user;
             };
             ChatRoomRemote.LogoutEvent += user =>
             {
                 Console.WriteLine($"用户\t{user.Name}\t离开了聊天室");
-                OnlineUsers.Remove(user);
+                OnlineUsers.Remove(user.Id);
             };
             ChatRoomRemote.AddMessageEvent += message =>
             {

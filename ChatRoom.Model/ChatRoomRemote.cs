@@ -19,7 +19,7 @@ namespace ChatRoom.Model
 
     public class ChatRoomRemote : MarshalByRefObject
     {
-        public List<User> Users => GetUsersEvent?.Invoke();
+        public Dictionary<int,User> Users => GetUsersEvent?.Invoke();
 
         public static User SystemUser = new User()
         {
@@ -32,17 +32,17 @@ namespace ChatRoom.Model
 
         public static Action<ChatMessage> AddMessageEvent;
 
-        public static Func<List<User>> GetUsersEvent;
+        public static Func<Dictionary<int,User>> GetUsersEvent;
 
-        public List<OnLineUser> OnLineUsers = new List<OnLineUser>();
+        public Dictionary<int,OnLineUser> OnLineUsers = new Dictionary<int, OnLineUser>();
 
         public OnLineUser Login(OnLineUser onLineUser)
         {
-            OnLineUsers.Add(onLineUser);
-
             var user = onLineUser.User;
             user = LoginEvent?.Invoke(user);
             onLineUser.User = user;
+
+            OnLineUsers[user.Id] = onLineUser;
 
             Broadcast(user);
             SendSystemMessage($"欢迎\t{user.Name}\t进入聊天室");
@@ -52,7 +52,7 @@ namespace ChatRoom.Model
 
         public void Logout(OnLineUser onLineUser)
         {
-            OnLineUsers.Remove(onLineUser);
+            OnLineUsers.Remove(onLineUser.User.Id);
             LogoutEvent?.Invoke(onLineUser.User);
 
             SendSystemMessage($"用户\t{onLineUser.User.Name}\t离开了聊天室");
@@ -61,12 +61,26 @@ namespace ChatRoom.Model
         public void AddMessage(ChatMessage message)
         {
             AddMessageEvent?.Invoke(message);
-            Broadcast(message);
+
+            if (message.ToUser != null)
+            {
+                var fromMessage = message.Clone();
+                fromMessage.Type = MessageType.From;
+                OnLineUsers[message.SendUser.Id].CallBack(fromMessage);
+
+                var toMessage = message.Clone();
+                toMessage.Type = MessageType.To;
+                OnLineUsers[message.ToUser.Id].CallBack(toMessage);
+            }
+            else
+            {
+                Broadcast(message);
+            }
         }
 
         private void Broadcast(IChatRoom chatRoom)
         {
-            foreach (var online in OnLineUsers)
+            foreach (var online in OnLineUsers.Values)
             {
                 online.CallBack(chatRoom);
             }

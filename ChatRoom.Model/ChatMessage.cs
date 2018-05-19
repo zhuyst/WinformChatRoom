@@ -7,13 +7,22 @@ namespace ChatRoom.Model
     {
         public User SendUser { get; set; }
 
+        public User ToUser { get; set; }
+
         public DateTime SendTime { get; set; }
 
         public string Text { get; set; }
 
-        public override string ToString()
+        public MessageType Type { get; set; } = MessageType.All;
+
+        public ChatMessage Clone()
         {
-            return $"{SendUser.Name}：{Text}\t——{SendTime}";
+            return MemberwiseClone() as ChatMessage;
         }
+    }
+
+    public enum MessageType
+    {
+        From,To,All
     }
 }
