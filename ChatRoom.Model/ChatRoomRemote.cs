@@ -21,11 +21,6 @@ namespace ChatRoom.Model
     {
         public Dictionary<int,User> Users => GetUsersEvent?.Invoke();
 
-        public static User SystemUser = new User()
-        {
-            Name = "系统"
-        };
-
         public static Func<User,User> LoginEvent;
 
         public static Action<User> LogoutEvent;
@@ -56,6 +51,11 @@ namespace ChatRoom.Model
             LogoutEvent?.Invoke(onLineUser.User);
 
             SendSystemMessage($"用户\t{onLineUser.User.Name}\t离开了聊天室");
+
+            Broadcast(new SystemMessage()
+            {
+                RemoveUserId = onLineUser.User.Id
+            });
         }
 
         public void AddMessage(ChatMessage message)
@@ -88,11 +88,10 @@ namespace ChatRoom.Model
 
         private void SendSystemMessage(string message)
         {
-            Broadcast(new ChatMessage()
+            Broadcast(new SystemMessage()
             {
-                SendUser = SystemUser,
                 Text = message,
-                SendTime = DateTime.Now
+                SengTime = DateTime.Now
             });
         }
     }

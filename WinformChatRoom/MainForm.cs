@@ -94,18 +94,42 @@ namespace WinformChatRoom
                     case User user:
                         AddUser(user);
                         break;
+                    case SystemMessage systemMessage:
+                        if (systemMessage.RemoveUserId != 0)
+                        {
+                            RemoveUser(systemMessage.RemoveUserId);
+                        }
+                        else
+                        {
+                            AddMessage(new ChatMessage()
+                            {
+                                SendUser = User.SystemUser,
+                                SendTime = systemMessage.SengTime,
+                                Text = systemMessage.Text
+                            });
+                        }
+                        break;
                     case ChatMessage message:
                         AddMessage(message);
                         break;
                 }
             }
         }
-
+    
         private void AddUser(User user)
         {
-            var item = new ListViewItem { Text = user.Id.ToString() };
+            var item = new ListViewItem
+            {
+                Text = user.Id.ToString(),
+                Name = user.Id.ToString()
+            };
             item.SubItems.Add(user.Name);
             UserListView.Items.Add(item);
+        }
+
+        private void RemoveUser(int userId)
+        {
+            UserListView.Items.RemoveByKey(userId.ToString());
         }
 
         private void AddMessage(ChatMessage message)
@@ -141,9 +165,14 @@ namespace WinformChatRoom
 
         private void UserListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectUserId = UserListView.SelectedIndices.Count > 0 ?
-                int.Parse(UserListView.Items[UserListView.SelectedIndices[0]].Text) : 0;
+            var selectUserId = GetSelectUserId();
             _selectUser = selectUserId != 0 ? _chatRoom.Users[selectUserId] : null;
+        }
+
+        private int GetSelectUserId()
+        {
+            return UserListView.SelectedIndices.Count > 0 ?
+                int.Parse(UserListView.Items[UserListView.SelectedIndices[0]].Text) : 0;
         }
     }
 }
