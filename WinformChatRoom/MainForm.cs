@@ -121,7 +121,7 @@ namespace WinformChatRoom
 
         private void SendButton_Click(object sender, EventArgs e)
         {
-            if (_selectUser.Id == _onLineUser.User.Id)
+            if (_selectUser != null && _selectUser.Id == _onLineUser.User.Id)
             {
                 MessageBox.Show(@"你不能对自己发起私聊！");
                 return;

@@ -32,7 +32,7 @@ namespace ChatRoom.Server
             };
             ChatRoomRemote.AddMessageEvent += message =>
             {
-                Console.WriteLine($"接收到消息\t{message.Text}");
+                Console.WriteLine($"用户\t{message.SendUser.Name}\t发送消息\t{message.Text}");
             };
             ChatRoomRemote.GetUsersEvent += () => OnlineUsers;
 
