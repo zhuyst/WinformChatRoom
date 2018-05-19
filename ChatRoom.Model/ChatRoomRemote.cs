@@ -65,6 +65,7 @@ namespace ChatRoom.Model
 
         /// <summary>
         /// 登陆
+        /// 将客户端远程对象放入服务端的远程对象中
         /// </summary>
         /// <param name="onLineUser">新用户</param>
         /// <returns>带着服务端生成的自增ID的用户</returns>
