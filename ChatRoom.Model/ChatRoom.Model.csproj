@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatFile.cs" />
+    <Compile Include="ChatImage.cs" />
     <Compile Include="ChatMessage.cs" />
+    <Compile Include="ChatRoomFileHelper.cs" />
     <Compile Include="ChatRoomRemote.cs" />
     <Compile Include="IChatRoom.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

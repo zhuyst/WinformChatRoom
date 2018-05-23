@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using ChatRoom.Model;
@@ -10,15 +11,11 @@ namespace WindowsFormsControlLibrary
     {
         public ChatMessage Message { get; set; }
 
-        private string _filePath;
-
-        private static readonly string SavePath =
-            $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\ChatRoom\";
+        private string _fileName;
 
         public MessageListItem()
         {
             InitializeComponent();
-            Directory.CreateDirectory(SavePath);
         }
 
         private void MessageListItem_Load(object sender, EventArgs e)
@@ -32,13 +29,25 @@ namespace WindowsFormsControlLibrary
                 MessageLabel.Cursor = cursor;
                 TimeLabel.Cursor = cursor;
 
-                var fileInfo = file.FileInfo;
-                _filePath = SavePath + fileInfo.Name;
+                _fileName = file.FileInfo.Name;
+                ChatRoomFileHelper.SaveFile(file.FileInfo);
 
-                file.FileInfo.CopyTo(_filePath,true);
                 Click += (o, args) => OpenFile();
                 MessageLabel.Click += (o, args) => OpenFile();
                 TimeLabel.Click += (o, args) => OpenFile();
+            }
+            else if (Message is ChatImage image)
+            {
+                _fileName = image.Image.Name;
+                ChatRoomFileHelper.SaveFile(image.Image);
+
+                var path = ChatRoomFileHelper.SavePath + _fileName;
+
+                var fromImage = Image.FromFile(path);
+                ImageBox.Height = fromImage.Height;
+                Height += fromImage.Height;
+
+                ImageBox.Load(path);
             }
 
             string text;
@@ -62,7 +71,8 @@ namespace WindowsFormsControlLibrary
 
         private void OpenFile()
         {
-            Process.Start(_filePath);
+            var path = ChatRoomFileHelper.SavePath + _fileName;
+            Process.Start(path);
         }
     }
 }

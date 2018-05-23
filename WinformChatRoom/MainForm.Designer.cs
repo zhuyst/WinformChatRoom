@@ -35,12 +35,12 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.MessageListPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.MessageTextBox = new System.Windows.Forms.TextBox();
-            this.SendButton = new System.Windows.Forms.Button();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
-            this.FileButton = new System.Windows.Forms.Button();
             this.ImageButton = new System.Windows.Forms.Button();
+            this.FileButton = new System.Windows.Forms.Button();
+            this.MessageTextBox = new System.Windows.Forms.TextBox();
+            this.SendButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -154,26 +154,6 @@
             this.splitContainer3.SplitterDistance = 448;
             this.splitContainer3.TabIndex = 0;
             // 
-            // MessageTextBox
-            // 
-            this.MessageTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MessageTextBox.Location = new System.Drawing.Point(0, 0);
-            this.MessageTextBox.Multiline = true;
-            this.MessageTextBox.Name = "MessageTextBox";
-            this.MessageTextBox.Size = new System.Drawing.Size(448, 243);
-            this.MessageTextBox.TabIndex = 0;
-            // 
-            // SendButton
-            // 
-            this.SendButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SendButton.Location = new System.Drawing.Point(0, 0);
-            this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(484, 284);
-            this.SendButton.TabIndex = 0;
-            this.SendButton.Text = "发送信息";
-            this.SendButton.UseVisualStyleBackColor = true;
-            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
-            // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -209,6 +189,17 @@
             this.splitContainer5.SplitterDistance = 227;
             this.splitContainer5.TabIndex = 0;
             // 
+            // ImageButton
+            // 
+            this.ImageButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImageButton.Location = new System.Drawing.Point(0, 0);
+            this.ImageButton.Name = "ImageButton";
+            this.ImageButton.Size = new System.Drawing.Size(227, 37);
+            this.ImageButton.TabIndex = 1;
+            this.ImageButton.Text = "发送表情";
+            this.ImageButton.UseVisualStyleBackColor = true;
+            this.ImageButton.Click += new System.EventHandler(this.ImageButton_Click);
+            // 
             // FileButton
             // 
             this.FileButton.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -220,15 +211,25 @@
             this.FileButton.UseVisualStyleBackColor = true;
             this.FileButton.Click += new System.EventHandler(this.FileButton_Click);
             // 
-            // ImageButton
+            // MessageTextBox
             // 
-            this.ImageButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageButton.Location = new System.Drawing.Point(0, 0);
-            this.ImageButton.Name = "ImageButton";
-            this.ImageButton.Size = new System.Drawing.Size(227, 37);
-            this.ImageButton.TabIndex = 1;
-            this.ImageButton.Text = "发送表情";
-            this.ImageButton.UseVisualStyleBackColor = true;
+            this.MessageTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MessageTextBox.Location = new System.Drawing.Point(0, 0);
+            this.MessageTextBox.Multiline = true;
+            this.MessageTextBox.Name = "MessageTextBox";
+            this.MessageTextBox.Size = new System.Drawing.Size(448, 243);
+            this.MessageTextBox.TabIndex = 0;
+            // 
+            // SendButton
+            // 
+            this.SendButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SendButton.Location = new System.Drawing.Point(0, 0);
+            this.SendButton.Name = "SendButton";
+            this.SendButton.Size = new System.Drawing.Size(484, 284);
+            this.SendButton.TabIndex = 0;
+            this.SendButton.Text = "发送信息";
+            this.SendButton.UseVisualStyleBackColor = true;
+            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
             // MainForm
             // 

@@ -30,6 +30,8 @@
         {
             this.MessageLabel = new System.Windows.Forms.Label();
             this.TimeLabel = new System.Windows.Forms.Label();
+            this.ImageBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).BeginInit();
             this.SuspendLayout();
             // 
             // MessageLabel
@@ -44,23 +46,34 @@
             // 
             // TimeLabel
             // 
-            this.TimeLabel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.TimeLabel.Location = new System.Drawing.Point(0, 15);
+            this.TimeLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.TimeLabel.Location = new System.Drawing.Point(0, 17);
             this.TimeLabel.Name = "TimeLabel";
             this.TimeLabel.Size = new System.Drawing.Size(808, 23);
             this.TimeLabel.TabIndex = 1;
             this.TimeLabel.Text = "—— 时间";
             this.TimeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // ImageBox
+            // 
+            this.ImageBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ImageBox.Location = new System.Drawing.Point(0, 15);
+            this.ImageBox.Name = "ImageBox";
+            this.ImageBox.Size = new System.Drawing.Size(808, 1);
+            this.ImageBox.TabIndex = 2;
+            this.ImageBox.TabStop = false;
+            // 
             // MessageListItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.ImageBox);
             this.Controls.Add(this.TimeLabel);
             this.Controls.Add(this.MessageLabel);
             this.Name = "MessageListItem";
-            this.Size = new System.Drawing.Size(808, 37);
+            this.Size = new System.Drawing.Size(808, 40);
             this.Load += new System.EventHandler(this.MessageListItem_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -69,5 +82,6 @@
 
         private System.Windows.Forms.Label MessageLabel;
         private System.Windows.Forms.Label TimeLabel;
+        private System.Windows.Forms.PictureBox ImageBox;
     }
 }

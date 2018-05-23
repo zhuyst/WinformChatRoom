@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
@@ -29,6 +30,8 @@ namespace WinformChatRoom
         /// 当前选择的私聊用户
         /// </summary>
         private User _selectUser;
+
+        private readonly List<ChatMessage> _messages = new List<ChatMessage>();
 
         public MainForm(string name)
         {
@@ -63,6 +66,13 @@ namespace WinformChatRoom
             // 获取服务端远程对象
             _chatRoom = (ChatRoomRemote)Activator.GetObject(typeof(ChatRoomRemote),Url);
 
+            // 读取历史聊天记录
+            var logs = ChatLogHelper.ReadLog();
+            foreach (var log in logs)
+            {
+                ReceivedMessage(log);
+            }
+
             // 执行登陆
             // 将客户端远程对象放入服务端的远程对象中
             _onLineUser = _chatRoom.Login(_onLineUser);
@@ -79,6 +89,9 @@ namespace WinformChatRoom
             // 执行注销操作
             _chatRoom.Logout(_onLineUser);
             ChannelServices.UnregisterChannel(_channel);
+
+            // 保存聊天记录
+            ChatLogHelper.SaveLog(_messages);
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -143,6 +156,7 @@ namespace WinformChatRoom
                         break;
 
                     case ChatMessage message:
+                        _messages.Add(message);
                         AddMessage(message);
                         break;
                 }
@@ -244,6 +258,26 @@ namespace WinformChatRoom
                 FileInfo = fileInfo
             };
             _chatRoom.AddMessage(chatFile);
+        }
+
+        private void ImageButton_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog()
+            {
+                Multiselect = false,
+                Filter = @"图片|*.jpg;*.png"
+            };
+            if (fileDialog.ShowDialog() != DialogResult.OK) return;
+
+            var fileInfo = new FileInfo(fileDialog.FileName);
+            var chatImage = new ChatImage()
+            {
+                SendUser = _onLineUser.User,
+                ToUser = _selectUser,
+                SendTime = DateTime.Now,
+                Image = fileInfo
+            };
+            _chatRoom.AddMessage(chatImage);
         }
     }
 }
