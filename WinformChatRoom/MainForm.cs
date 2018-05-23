@@ -31,6 +31,9 @@ namespace WinformChatRoom
         /// </summary>
         private User _selectUser;
 
+        /// <summary>
+        /// 当前聊天记录列表
+        /// </summary>
         private readonly List<ChatMessage> _messages = new List<ChatMessage>();
 
         public MainForm(string name)
@@ -265,6 +268,8 @@ namespace WinformChatRoom
             var fileDialog = new OpenFileDialog()
             {
                 Multiselect = false,
+
+                // 限定为图片类型
                 Filter = @"图片|*.jpg;*.png"
             };
             if (fileDialog.ShowDialog() != DialogResult.OK) return;

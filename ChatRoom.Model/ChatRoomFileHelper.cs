@@ -5,6 +5,9 @@ namespace ChatRoom.Model
 {
     public class ChatRoomFileHelper
     {
+        /// <summary>
+        /// 文件保存路径
+        /// </summary>
         public static readonly string SavePath =
             $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\ChatRoom\";
 
@@ -13,6 +16,10 @@ namespace ChatRoom.Model
             Directory.CreateDirectory(SavePath);
         }
 
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="fileInfo"></param>
         public static void SaveFile(FileInfo fileInfo)
         {
             var filePath = SavePath + fileInfo.Name;
