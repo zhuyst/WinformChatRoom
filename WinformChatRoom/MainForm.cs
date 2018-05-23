@@ -284,5 +284,11 @@ namespace WinformChatRoom
             };
             _chatRoom.AddMessage(chatImage);
         }
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {
+            MessageListPanel.Controls.Clear();
+            _messages.Clear();
+        }
     }
 }

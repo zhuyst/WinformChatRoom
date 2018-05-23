@@ -41,6 +41,8 @@
             this.FileButton = new System.Windows.Forms.Button();
             this.MessageTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
+            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
+            this.ClearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -61,6 +63,10 @@
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).BeginInit();
+            this.splitContainer6.Panel1.SuspendLayout();
+            this.splitContainer6.Panel2.SuspendLayout();
+            this.splitContainer6.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -119,7 +125,7 @@
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.BackColor = System.Drawing.Color.White;
-            this.splitContainer2.Panel1.Controls.Add(this.MessageListPanel);
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer6);
             // 
             // splitContainer2.Panel2
             // 
@@ -134,7 +140,7 @@
             this.MessageListPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.MessageListPanel.Location = new System.Drawing.Point(0, 0);
             this.MessageListPanel.Name = "MessageListPanel";
-            this.MessageListPanel.Size = new System.Drawing.Size(936, 459);
+            this.MessageListPanel.Size = new System.Drawing.Size(886, 459);
             this.MessageListPanel.TabIndex = 0;
             // 
             // splitContainer3
@@ -231,6 +237,35 @@
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
+            // splitContainer6
+            // 
+            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer6.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer6.Name = "splitContainer6";
+            // 
+            // splitContainer6.Panel1
+            // 
+            this.splitContainer6.Panel1.Controls.Add(this.MessageListPanel);
+            // 
+            // splitContainer6.Panel2
+            // 
+            this.splitContainer6.Panel2.Controls.Add(this.ClearButton);
+            this.splitContainer6.Size = new System.Drawing.Size(936, 459);
+            this.splitContainer6.SplitterDistance = 886;
+            this.splitContainer6.TabIndex = 0;
+            // 
+            // ClearButton
+            // 
+            this.ClearButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ClearButton.Location = new System.Drawing.Point(0, 0);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.ClearButton.Size = new System.Drawing.Size(46, 459);
+            this.ClearButton.TabIndex = 0;
+            this.ClearButton.Text = "清空聊天记录";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
@@ -263,6 +298,10 @@
             this.splitContainer5.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
             this.splitContainer5.ResumeLayout(false);
+            this.splitContainer6.Panel1.ResumeLayout(false);
+            this.splitContainer6.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
+            this.splitContainer6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -282,6 +321,8 @@
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.Button ImageButton;
         private System.Windows.Forms.Button FileButton;
+        private System.Windows.Forms.SplitContainer splitContainer6;
+        private System.Windows.Forms.Button ClearButton;
     }
 }
 
