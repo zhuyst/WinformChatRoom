@@ -43,6 +43,7 @@ namespace WindowsFormsControlLibrary
 
                 var path = ChatRoomFileHelper.SavePath + _fileName;
 
+                // 加大控件大小，以适应图片大小
                 var fromImage = Image.FromFile(path);
                 ImageBox.Height = fromImage.Height;
                 Height += fromImage.Height;
@@ -69,6 +70,9 @@ namespace WindowsFormsControlLibrary
             TimeLabel.Text = $@"—— {Message.SendTime}";
         }
 
+        /// <summary>
+        /// 打开文件
+        /// </summary>
         private void OpenFile()
         {
             var path = ChatRoomFileHelper.SavePath + _fileName;
