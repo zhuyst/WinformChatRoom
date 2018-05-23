@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Tcp;
 using System.Windows.Forms;
@@ -226,6 +227,23 @@ namespace WinformChatRoom
             // 选择/变更私聊用户
             var selectUserId = GetSelectUserId();
             _selectUser = selectUserId != 0 ? _chatRoom.Users[selectUserId] : null;
+        }
+
+        private void FileButton_Click(object sender, EventArgs e)
+        {
+            var fileDialog = new OpenFileDialog() { Multiselect = false };
+            if (fileDialog.ShowDialog() != DialogResult.OK) return;
+
+            var fileInfo = new FileInfo(fileDialog.FileName);
+            var chatFile = new ChatFile()
+            {
+                SendUser = _onLineUser.User,
+                ToUser = _selectUser,
+                SendTime = DateTime.Now,
+                Text = fileInfo.Name,
+                FileInfo = fileInfo
+            };
+            _chatRoom.AddMessage(chatFile);
         }
     }
 }
